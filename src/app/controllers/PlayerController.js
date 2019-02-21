@@ -13,7 +13,7 @@ class PlayerController {
     return res.json(user)
   }
 
-  async players (req, res) {
+  async all (req, res) {
     return res.json(await Player.find())
   }
 }
