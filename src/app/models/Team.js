@@ -19,13 +19,11 @@ const Team = new mongoose.Schema({
       }
     }
   ],
-  managers: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Player',
-      required: true
-    }
-  ]
+  manager: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Manager'
+  }
 })
 
 module.exports = mongoose.model('Team', Team)
