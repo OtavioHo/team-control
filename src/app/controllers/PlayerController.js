@@ -16,6 +16,26 @@ class PlayerController {
   async all (req, res) {
     return res.json(await Player.find())
   }
+
+  async show (req, res) {
+    const player = await Player.findById(req.params.id)
+
+    return res.json(player)
+  }
+
+  async update (req, res) {
+    const player = await Player.findByIdAndUpdate(req.params.id, req.body, {
+      new: true
+    })
+
+    return res.json(player)
+  }
+
+  async delete (req, res) {
+    await Player.findByIdAndDelete(req.params.id)
+
+    return res.send()
+  }
 }
 
 module.exports = new PlayerController()
