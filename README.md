@@ -1,3 +1,3 @@
-#TEAM CONTROL
+# TEAM CONTROL
 
 Write about team control here.
