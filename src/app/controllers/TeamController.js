@@ -12,11 +12,11 @@ class TeamController {
   }
 
   async all (req, res) {
-    return res.json(await Team.find().populate('manager'))
+    return res.json(await Team.find())
   }
 
   async show (req, res) {
-    const team = await Team.findById(req.params.id)
+    const team = await Team.findById(req.params.id).populate('players.player')
 
     return res.json(team)
   }
@@ -27,6 +27,29 @@ class TeamController {
     })
 
     return res.json(team)
+  }
+
+  async addPlayer (req, res) {
+    if (!req.body.player) {
+      return res.status(400).json({ error: 'player not specified' })
+    }
+
+    const player = {
+      player: mongoose.Types.ObjectId(req.body.player),
+      fee: req.body.fee
+    }
+
+    const team = await Team.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { players: player }
+      },
+      {
+        new: true
+      }
+    )
+
+    return res.json(team.populate('manager'))
   }
 
   async delete (req, res) {

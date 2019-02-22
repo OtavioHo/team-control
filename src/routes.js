@@ -15,6 +15,8 @@ routes.get('/players', controllers.PlayerController.all)
 
 routes.post('/teams', authMiddleware, controllers.TeamController.store)
 routes.get('/teams', controllers.TeamController.all)
+routes.put('/teams/:id', controllers.TeamController.addPlayer)
+routes.get('/teams/:id', controllers.TeamController.show)
 
 routes.post('/incomes', controllers.IncomeController.store)
 routes.get('/incomes', controllers.IncomeController.all)
