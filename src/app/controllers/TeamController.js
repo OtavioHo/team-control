@@ -34,22 +34,30 @@ class TeamController {
       return res.status(400).json({ error: 'player not specified' })
     }
 
+    const team = await Team.findById(req.params.id)
+
+    for (let i = 0; i < team.players.length; i++) {
+      if (team.players[i].player._id.toString() === req.body.player) {
+        team.players.splice(i, 1)
+        console.log(team)
+        await team.save()
+        return res.status(201).json({ message: 'player removed' })
+      }
+    }
+
     const player = {
       player: mongoose.Types.ObjectId(req.body.player),
       fee: req.body.fee
     }
 
-    const team = await Team.findByIdAndUpdate(
-      req.params.id,
-      {
-        $push: { players: player }
-      },
-      {
-        new: true
-      }
-    )
+    team.players.push(player)
+    try {
+      await team.save()
+    } catch (e) {
+      console.log(e)
+    }
 
-    return res.json(team.populate('manager'))
+    return res.json(team)
   }
 
   async delete (req, res) {
