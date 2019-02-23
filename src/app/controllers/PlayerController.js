@@ -1,4 +1,5 @@
 const Player = require('../models/Player')
+const Team = require('../models/Team')
 
 class PlayerController {
   async store (req, res) {
@@ -8,7 +9,24 @@ class PlayerController {
       return res.status(400).json({ error: 'Player already exists' })
     }
 
+    if (!req.body.team) {
+      return res.status(400).json({ error: 'Team not specified' })
+    }
+
     const user = await Player.create(req.body)
+
+    const player = {
+      player: user._id,
+      fee: req.body.fee
+    }
+
+    const team = await Team.findByIdAndUpdate(
+      req.body.team,
+      { $push: { players: player } },
+      { new: true }
+    )
+
+    console.log(team)
 
     return res.json(user)
   }
