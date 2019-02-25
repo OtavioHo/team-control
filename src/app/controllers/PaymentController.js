@@ -1,34 +1,13 @@
-const Payment = require('../models/Payment')
+const { Payments } = require('../models')
 
 class PaymentController {
   async store (req, res) {
-    const payment = await Payment.create(req.body)
-
-    return res.json(payment)
-  }
-
-  async all (req, res) {
-    return res.json(await Payment.find())
-  }
-
-  async show (req, res) {
-    const payment = await Payment.findById(req.params.id)
-
-    return res.json(payment)
-  }
-
-  async update (req, res) {
-    const payment = await Payment.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
+    const team = await Payments.create({
+      ...req.body,
+      TeamId: req.params.team_id
     })
 
-    return res.json(payment)
-  }
-
-  async delete (req, res) {
-    await Payment.findByIdAndDelete(req.params.id)
-
-    return res.send()
+    return res.json(team)
   }
 }
 

@@ -1,32 +1,13 @@
-const Income = require('../models/Income')
+const { Incomes } = require('../models')
 
 class IncomeController {
   async store (req, res) {
-    const income = await Income.create(req.body)
-
-    return res.json(income)
-  }
-
-  async all (req, res) {
-    return res.json(await Income.find())
-  }
-
-  async show (req, res) {
-    const income = await Income.findById(req.params.id)
-
-    return res.json(income)
-  }
-
-  async update (req, res) {
-    const income = await Income.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
+    const team = await Incomes.create({
+      ...req.body,
+      TeamId: req.params.team_id
     })
 
-    return res.json(income)
-  }
-
-  async delete (req, res) {
-    await Income.findByIdAndDelete(req.params.id)
+    return res.json(team)
   }
 }
 
