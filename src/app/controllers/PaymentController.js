@@ -1,4 +1,4 @@
-const { Payments } = require('../models')
+const { Payments, Teams } = require('../models')
 
 class PaymentController {
   async store (req, res) {
@@ -8,6 +8,20 @@ class PaymentController {
     })
 
     return res.json(team)
+  }
+
+  async payments (req, res) {
+    const payments = await Teams.findOne({
+      where: { id: req.params.team_id },
+      include: [
+        {
+          model: Payments,
+          as: 'Payments'
+        }
+      ]
+    })
+
+    return res.json(payments.Payments)
   }
 }
 

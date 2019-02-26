@@ -5,11 +5,19 @@ module.exports = {
     return queryInterface.createTable('PlayersTeams', {
       UserId: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        reference: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       TeamId: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        reference: {
+          model: 'Teams',
+          key: 'id'
+        }
       },
       fee: {
         type: Sequelize.INTEGER

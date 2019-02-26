@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Team.associate = models => {
-    Team.belongsToMany(models.Users, { through: models.PlayersTeams })
+    Team.belongsToMany(models.Users, { through: 'PlayersTeams' })
     Team.hasMany(models.Payments, { as: 'Payments' })
     Team.hasMany(models.Incomes, { as: 'Incomes' })
   }
