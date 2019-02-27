@@ -22,6 +22,21 @@ class PlayerController {
 
     return res.json(players)
   }
+
+  async update (req, res) {
+    await Users.update(req.body, {
+      where: { id: req.params.user_id }
+    })
+
+    return res.status(200).json({ message: 'User updated' })
+  }
+
+  async delete (req, res) {
+    const user = await Users.findOne({ where: { id: req.params.user_id } })
+    await user.destroy()
+
+    return res.status(200).json({ message: 'User deleted' })
+  }
 }
 
 module.exports = new PlayerController()
