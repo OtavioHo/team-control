@@ -1,7 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
   const Team = sequelize.define('Teams', {
     name: DataTypes.STRING,
-    avatar: DataTypes.STRING
+    avatar: DataTypes.STRING,
+    balance: { type: DataTypes.FLOAT, defaultValue: 0 }
   })
 
   Team.associate = models => {

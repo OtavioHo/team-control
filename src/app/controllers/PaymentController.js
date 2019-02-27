@@ -2,12 +2,15 @@ const { Payments, Teams } = require('../models')
 
 class PaymentController {
   async store (req, res) {
-    const team = await Payments.create({
+    const payment = await Payments.create({
       ...req.body,
       TeamId: req.params.team_id
     })
 
-    return res.json(team)
+    const team = await Teams.findOne({ where: { id: req.params.team_id } })
+    team.update({ balance: team.balance - payment.value })
+
+    return res.json(payment)
   }
 
   async payments (req, res) {

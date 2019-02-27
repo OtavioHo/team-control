@@ -1,12 +1,13 @@
 const express = require('express')
-
 const routes = express.Router()
-
 const controllers = require('./app/controllers')
 
 const authMiddleware = require('./app/middlewares/auth')
 
 routes.post('/login', controllers.LoginController.login)
+routes.post('/users', controllers.PlayerController.store)
+
+routes.use(authMiddleware)
 
 // Incomes
 routes.post('/teams/:team_id/incomes', controllers.IncomeController.store)
@@ -42,9 +43,8 @@ routes.get(
 
 // Users
 routes.get('/users', controllers.PlayerController.show)
-routes.post('/users', controllers.PlayerController.store)
 routes.put('/users/:user_id', controllers.PlayerController.update)
 routes.delete('/users/:user_id', controllers.PlayerController.delete)
-routes.get('/users/teams', authMiddleware, controllers.TeamController.teams)
+routes.get('/users/teams', controllers.TeamController.teams)
 
 module.exports = routes

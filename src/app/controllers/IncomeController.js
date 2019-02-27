@@ -7,6 +7,9 @@ class IncomeController {
       TeamId: req.params.team_id
     })
 
+    const teams = await Teams.findOne({ where: { id: req.params.team_id } })
+    teams.update({ balance: teams.balance + income.value })
+
     return res.json(income)
   }
 
