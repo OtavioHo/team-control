@@ -36,10 +36,12 @@ routes.put(
 // Teams
 routes.post('/teams', controllers.TeamController.store)
 routes.get('/teams/:team_id/players', controllers.TeamController.players)
+routes.post('/teams/:team_id/players', controllers.TeamController.addPlayer)
 routes.get(
   '/teams/:team_id/players/:user_id',
   controllers.TeamController.player
 )
+routes.put('/teams/:team_id/admins', controllers.TeamController.addAdmin)
 
 // Users
 routes.get('/users', controllers.PlayerController.show)

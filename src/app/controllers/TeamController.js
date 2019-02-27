@@ -4,7 +4,11 @@ class TeamController {
   async store (req, res) {
     const team = await Teams.create(req.body)
 
-    await PlayersTeams.create({ UserId: req.body.user_id, TeamId: team.id })
+    await PlayersTeams.create({
+      UserId: req.body.user_id,
+      TeamId: team.id,
+      manager: true
+    })
 
     return res.json(team)
   }
@@ -49,9 +53,21 @@ class TeamController {
   }
 
   async addPlayer (req, res) {
-    await PlayersTeams.create({ UserId: req.body, TeamId: req.params.team_id })
+    await PlayersTeams.create({
+      UserId: req.body.user_id,
+      TeamId: req.params.team_id
+    })
 
     res.status(200).json({ message: 'Player added' })
+  }
+
+  async addAdmin (req, res) {
+    await PlayersTeams.update(
+      { manager: true },
+      { where: { UserId: req.body.user_id } }
+    )
+
+    return res.status(200).json({ message: 'Admin added' })
   }
 
   async update (req, res) {
