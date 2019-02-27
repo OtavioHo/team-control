@@ -31,9 +31,10 @@ class PlayerController {
     return res.status(200).json({ message: 'User updated' })
   }
 
-  async delete (req, res) {
-    const user = await Users.findOne({ where: { id: req.params.user_id } })
-    await user.destroy()
+  delete (req, res) {
+    Users.findOne({ where: { id: req.params.user_id } }).then(user => {
+      user.destroy()
+    })
 
     return res.status(200).json({ message: 'User deleted' })
   }

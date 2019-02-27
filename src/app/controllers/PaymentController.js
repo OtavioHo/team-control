@@ -23,6 +23,18 @@ class PaymentController {
 
     return res.json(payments.Payments)
   }
+
+  async update (req, res) {
+    await Payments.update(req.body, {
+      where: { id: req.params.payment_id }
+    })
+  }
+
+  delete (req, res) {
+    Payments.findOne({ where: { id: req.params.payment_id } }).then(payment => {
+      payment.destroy()
+    })
+  }
 }
 
 module.exports = new PaymentController()
