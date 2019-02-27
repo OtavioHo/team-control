@@ -3,6 +3,7 @@ const routes = express.Router()
 const controllers = require('./app/controllers')
 
 const authMiddleware = require('./app/middlewares/auth')
+const permissions = require('./app/middlewares/permissions')
 
 routes.post('/login', controllers.LoginController.login)
 routes.post('/users', controllers.PlayerController.store)
@@ -35,7 +36,12 @@ routes.put(
 
 // Teams
 routes.post('/teams', controllers.TeamController.store)
-routes.get('/teams/:team_id/players', controllers.TeamController.players)
+routes.get(
+  '/teams/:team_id/players',
+  permissions.player,
+  permissions.admin,
+  controllers.TeamController.players
+)
 routes.post('/teams/:team_id/players', controllers.TeamController.addPlayer)
 routes.get(
   '/teams/:team_id/players/:user_id',

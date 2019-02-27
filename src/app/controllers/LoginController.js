@@ -2,6 +2,7 @@ const { Users } = require('../models')
 
 class LoginController {
   async login (req, res) {
+    // verify credential and generate token
     const { email, password } = req.body
 
     const user = await Users.findOne({ where: { email: email } })

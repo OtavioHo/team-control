@@ -2,28 +2,31 @@ const { Users } = require('../models')
 
 class PlayerController {
   async store (req, res) {
+    // store new user
     const { email } = req.body
 
     if (
       await Users.findOne({
         where: { email }
-      })
+      }) // verify if the email is already used
     ) {
-      return res.status(400).json({ error: 'Player already exists' })
+      return res.status(400).json({ error: 'Email already used' })
     }
 
-    const user = await Users.create(req.body)
+    const user = await Users.create(req.body) // create user
 
     return res.json(user)
   }
 
   async show (req, res) {
+    // show all users
     const players = await Users.findAll()
 
     return res.json(players)
   }
 
   async update (req, res) {
+    // update a user
     await Users.update(req.body, {
       where: { id: req.params.user_id }
     })
@@ -32,6 +35,7 @@ class PlayerController {
   }
 
   delete (req, res) {
+    // delete user
     Users.findOne({ where: { id: req.params.user_id } }).then(user => {
       user.destroy()
     })
