@@ -1,4 +1,4 @@
-const { Users } = require('../models')
+const { Users, Teams } = require('../models')
 
 class PlayerController {
   async store (req, res) {
@@ -41,6 +41,23 @@ class PlayerController {
     })
 
     return res.status(200).json({ message: 'User deleted' })
+  }
+
+  async teams (req, res) {
+    // List all teams from a user
+    const teams = await Users.findOne({
+      where: { id: req.userId },
+      include: [
+        {
+          model: Teams,
+          through: {
+            where: { UserId: req.userId }
+          }
+        }
+      ]
+    })
+
+    return res.json(teams.Teams)
   }
 }
 

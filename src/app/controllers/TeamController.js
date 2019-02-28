@@ -14,28 +14,18 @@ class TeamController {
     return res.json(team)
   }
 
+  async show (req, res) {
+    // Show one team by ID
+    const team = await Teams.findOne({ where: { id: req.params.team_id } })
+
+    return res.json(team)
+  }
+
   async all (req, res) {
     // List all teams
     const teams = await Teams.findAll()
 
     return res.json(teams)
-  }
-
-  async teams (req, res) {
-    // List all teams from a user
-    const teams = await Users.findOne({
-      where: { id: req.userId },
-      include: [
-        {
-          model: Teams,
-          through: {
-            where: { UserId: req.userId }
-          }
-        }
-      ]
-    })
-
-    return res.json(teams.Teams)
   }
 
   async players (req, res) {

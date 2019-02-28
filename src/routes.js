@@ -21,6 +21,10 @@ routes.put(
   '/teams/:team_id/incomes/:income_id',
   controllers.IncomeController.update
 )
+routes.get(
+  '/teams/:team_id/incomes/:income_id',
+  controllers.IncomeController.show
+)
 
 // Payments
 routes.get('/teams/:team_id/payments', controllers.PaymentController.payments)
@@ -33,9 +37,14 @@ routes.put(
   '/teams/:team_id/payments/:payment_id',
   controllers.PaymentController.update
 )
+routes.get(
+  '/teams/:team_id/payments/:payment_id',
+  controllers.PaymentController.show
+)
 
 // Teams
 routes.post('/teams', controllers.TeamController.store)
+routes.get('/teams/:team_id', controllers.TeamController.show)
 routes.get(
   '/teams/:team_id/players',
   permissions.player,
@@ -53,6 +62,6 @@ routes.put('/teams/:team_id/admins', controllers.TeamController.addAdmin)
 routes.get('/users', controllers.PlayerController.show)
 routes.put('/users/:user_id', controllers.PlayerController.update)
 routes.delete('/users/:user_id', controllers.PlayerController.delete)
-routes.get('/users/teams', controllers.TeamController.teams)
+routes.get('/users/teams', controllers.PlayerController.teams)
 
 module.exports = routes

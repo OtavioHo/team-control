@@ -9,13 +9,23 @@ class IncomeController {
     })
 
     const teams = await Teams.findOne({ where: { id: req.params.team_id } })
+    // TODO: verify if team exists
     teams.update({ balance: teams.balance + income.value }) // update team's balance
 
     return res.json(income)
   }
 
+  async show (req, res) {
+    // Show one income by ID
+    const income = await Incomes.findoOne({
+      where: { id: req.params.income_id }
+    })
+
+    return res.json(income)
+  }
+
   async incomes (req, res) {
-    // show all incomes from a team
+    // List all incomes from a team
     const incomes = await Teams.findOne({
       where: { id: req.params.team_id },
       include: [
@@ -49,11 +59,14 @@ class IncomeController {
 
   async delete (req, res) {
     // delete income
-    Incomes.findOne({ where: { id: req.params.income_id } }).then(income => {
-      income.destroy()
+    const income = await Incomes.findOne({
+      where: { id: req.params.income_id }
     })
 
-    // TODO: update balance
+    const team = Teams.findOne({ where: { id: req.params.team_id } }) // find team
+    team.update({ balance: team.balance - income.value })
+
+    income.destroy()
 
     return res.status(200).json({ message: 'Income deleted' })
   }
