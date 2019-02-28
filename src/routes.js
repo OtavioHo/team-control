@@ -63,5 +63,9 @@ routes.get('/users', controllers.PlayerController.show)
 routes.put('/users/:user_id', controllers.PlayerController.update)
 routes.delete('/users/:user_id', controllers.PlayerController.delete)
 routes.get('/users/teams', controllers.PlayerController.teams)
+routes.get('/users/matches', controllers.PlayerController.matches)
+
+// Matches
+routes.post('/matches', controllers.MatchesController.store)
 
 module.exports = routes

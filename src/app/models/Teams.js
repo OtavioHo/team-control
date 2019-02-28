@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     Team.belongsToMany(models.Users, { through: 'PlayersTeams' })
     Team.hasMany(models.Payments, { as: 'Payments' })
     Team.hasMany(models.Incomes, { as: 'Incomes' })
+    Team.hasMany(models.Matches, { as: 'home' })
+    Team.hasMany(models.Matches, { as: 'away' })
   }
 
   return Team

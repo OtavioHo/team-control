@@ -59,6 +59,15 @@ class PlayerController {
 
     return res.json(teams.Teams)
   }
+
+  async matches (req, res) {
+    // List all matches confirmed by user
+    const player = await Users.findOne({ where: { id: req.userId } })
+
+    const matches = await player.getMatches()
+
+    return res.json(matches)
+  }
 }
 
 module.exports = new PlayerController()

@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = models => {
     User.belongsToMany(models.Teams, { through: 'PlayersTeams' })
+    User.belongsToMany(models.Matches, { through: 'ConfirmedMatches' })
     User.hasMany(models.Incomes, { as: 'Incomes' })
   }
 
